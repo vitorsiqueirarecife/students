@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/vitorsiqueirarecife/students/internal/config"
 	handlerH "github.com/vitorsiqueirarecife/students/internal/modules/healthcheck/handler"
@@ -20,6 +21,10 @@ func SetupRouter() *gin.Engine {
 	}
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+	}))
 
 	opts := repository.StudentRepositoryOptions{
 		DB: db,
