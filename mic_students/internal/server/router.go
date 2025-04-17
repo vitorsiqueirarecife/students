@@ -18,7 +18,6 @@ func SetupRouter() *gin.Engine {
 	if err != nil {
 		log.Fatalf("Error when trying to connect to database: %v", err)
 	}
-	defer db.Close()
 
 	router := gin.Default()
 
