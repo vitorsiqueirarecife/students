@@ -6,7 +6,7 @@ import (
 )
 
 type StudentRepository interface {
-	GetAll() ([]domain.Student, error)
+	GetAll(page int, limit int) (*domain.GetAllStudentsResponse, error)
 }
 
 type studentRepository struct {
@@ -23,10 +23,21 @@ func NewStudentRepository(opt StudentRepositoryOptions) StudentRepository {
 	}
 }
 
-func (r *studentRepository) GetAll() ([]domain.Student, error) {
+func (r *studentRepository) GetAll(page int, limit int) (*domain.GetAllStudentsResponse, error) {
 	var students []domain.Student
-	if err := r.db.Find(&students).Error; err != nil {
+	var total int
+
+	err := r.db.Model(&domain.Student{}).Count(&total).Error
+	if err != nil {
 		return nil, err
 	}
-	return students, nil
+
+	err = r.db.Offset((page - 1) * limit).Limit(limit).Find(&students).Error
+	if err != nil {
+		return nil, err
+	}
+	return &domain.GetAllStudentsResponse{
+		Students: students,
+		Total:    total,
+	}, nil
 }

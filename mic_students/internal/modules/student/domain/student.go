@@ -5,3 +5,8 @@ type Student struct {
 	Name  string `json:"name"`
 	Grade int    `json:"grade"`
 }
+
+type GetAllStudentsResponse struct {
+	Students []Student `json:"students"`
+	Total    int       `json:"total"`
+}
