@@ -45,5 +45,9 @@ func SetupRouter() *gin.Engine {
 		c.JSON(200, students)
 	})
 
+	router.POST("/students", func(c *gin.Context) {
+		studentHandler.Create(c.Writer, c.Request)
+	})
+
 	return router
 }

@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -39,4 +41,16 @@ func (h *StudentHandler) GetAll(w http.ResponseWriter, r *http.Request) *domain.
 	}
 
 	return res
+}
+
+func (h *StudentHandler) Create(w http.ResponseWriter, r *http.Request) {
+	var student domain.Student
+	if err := json.NewDecoder(r.Body).Decode(&student); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	fmt.Println(student)
+
+	w.WriteHeader(http.StatusCreated)
 }
