@@ -38,8 +38,5 @@ func (h *StudentHandler) GetAll(w http.ResponseWriter, r *http.Request) *domain.
 		return nil
 	}
 
-	return &domain.GetAllStudentsResponse{
-		Students: res.Students,
-		Total:    res.Total,
-	}
+	return res
 }

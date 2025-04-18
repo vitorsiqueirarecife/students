@@ -33,8 +33,5 @@ func (s *studentService) GetAll(page int, limit int) (*domain.GetAllStudentsResp
 		return nil, err
 	}
 
-	return &domain.GetAllStudentsResponse{
-		Students: res.Students,
-		Total:    res.Total,
-	}, nil
+	return res, nil
 }

@@ -36,8 +36,10 @@ func (r *studentRepository) GetAll(page int, limit int) (*domain.GetAllStudentsR
 	if err != nil {
 		return nil, err
 	}
+
 	return &domain.GetAllStudentsResponse{
-		Students: students,
-		Total:    total,
+		Students:   students,
+		Total:      total,
+		TotalPages: (total + limit - 1) / limit,
 	}, nil
 }

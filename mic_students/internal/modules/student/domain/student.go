@@ -7,6 +7,7 @@ type Student struct {
 }
 
 type GetAllStudentsResponse struct {
-	Students []Student `json:"students"`
-	Total    int       `json:"total"`
+	Students   []Student `json:"students"`
+	Total      int       `json:"total"`
+	TotalPages int       `json:"totalPages"`
 }
