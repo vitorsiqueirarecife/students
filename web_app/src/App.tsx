@@ -1,14 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import StudentsList from "./modules/students/screens/List";
+import StudentListScreen from "./modules/students/screens/List";
+import StudentFormScreen from "./modules/students/screens/Form";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div data-testid="container" >
-        <StudentsList />
-      </div>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<StudentListScreen />} />
+        <Route path="/form" element={<StudentFormScreen />} />
+      </Routes>
+    </BrowserRouter>
     </QueryClientProvider>
   );
 }
