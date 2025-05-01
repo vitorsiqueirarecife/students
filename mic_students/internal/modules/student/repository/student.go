@@ -7,6 +7,7 @@ import (
 
 type StudentRepository interface {
 	GetAll(page int, limit int) (*domain.GetAllStudentsResponse, error)
+	Create(student *domain.Student) error
 }
 
 type studentRepository struct {
@@ -42,4 +43,12 @@ func (r *studentRepository) GetAll(page int, limit int) (*domain.GetAllStudentsR
 		Total:      total,
 		TotalPages: (total + limit - 1) / limit,
 	}, nil
+}
+
+func (r *studentRepository) Create(student *domain.Student) error {
+	err := r.db.Create(student).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }

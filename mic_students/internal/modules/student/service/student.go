@@ -2,13 +2,16 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/vitorsiqueirarecife/students/internal/modules/student/domain"
 	"github.com/vitorsiqueirarecife/students/internal/modules/student/repository"
 )
 
 type StudentService interface {
 	GetAll(page int, limit int) (*domain.GetAllStudentsResponse, error)
+	Create(student *domain.Student) error
 }
 
 type studentService struct {
@@ -34,4 +37,23 @@ func (s *studentService) GetAll(page int, limit int) (*domain.GetAllStudentsResp
 	}
 
 	return res, nil
+}
+
+func (s *studentService) Create(student *domain.Student) error {
+	fmt.Println(1)
+	if student.Name == "" {
+		return errors.New("Name is required")
+	}
+	if student.Grade < 1 || student.Grade > 12 {
+		return errors.New("Grade must be between 1 and 12")
+	}
+
+	student.ID = uuid.New().String()
+
+	err := s.repo.Create(student)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

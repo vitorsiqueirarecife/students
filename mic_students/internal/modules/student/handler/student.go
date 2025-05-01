@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -50,7 +49,10 @@ func (h *StudentHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(student)
+	if err := h.service.Create(&student); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	w.WriteHeader(http.StatusCreated)
 }
